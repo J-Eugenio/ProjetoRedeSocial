@@ -15,7 +15,7 @@ export const addPost = post => {
             .then(resp => {
 
                 post.image = resp.data.imageUrl//copia a url da imagem para o state local image
-                axios.post('/posts.json', { ...post })//persiste os dados no banco
+                axios.post('/posts.json', { ...post })//persiste os dados no banco.
                     .catch(err => console.log(err))
                     .then(res => console.log(res.data))
             })
