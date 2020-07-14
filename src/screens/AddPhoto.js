@@ -23,8 +23,18 @@ class AddPhoto extends Component {
         comment: '',
     }
 
+    componentDidUpdate = prevProps => {
+        if (prevProps.loading && !this.props.loading) {
+            this.setState({
+                image: null,
+                comment: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     pickImage = () => {
-        if(!this.props.name){
+        if (!this.props.name) {
             Alert.alert('Falha!', noUser)
             return
         }
@@ -41,7 +51,7 @@ class AddPhoto extends Component {
     }
 
     save = async () => {
-        if(!this.props.name){
+        if (!this.props.name) {
             Alert.alert('Falha!', noUser)
             return
         }
@@ -51,14 +61,11 @@ class AddPhoto extends Component {
             nickname: this.props.name,
             email: this.props.email,
             image: this.state.image,
-            comments:[{
+            comments: [{
                 nickname: this.props.name,
-                comment:  this.state.comment
+                comment: this.state.comment
             }]
         })
-
-        this.setState({image: null, comment: ''})
-        this.props.navigation.navigate('Feed')
     }
 
     render() {
@@ -78,7 +85,8 @@ class AddPhoto extends Component {
                         editable={this.props.name != null}
                         onChangeText={comment => this.setState({ comment })} />
                     <TouchableOpacity onPress={this.save}
-                        style={styles.buttom}>
+                        disabled={this.props.loading}
+                        style={[styles.buttom, this.props.loading ? styles.buttonDisable: null]}>
                         <Text style={styles.buttomText}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
@@ -120,19 +128,23 @@ const styles = StyleSheet.create({
     input: {
         marginTop: 20,
         width: '90%'
+    },
+    buttonDisable:{
+        backgroundColor: '#AAA'
     }
 })
 
 //export default AddPhoto
 
-const MapStateToProps = ({ user }) =>{
-    return{
+const MapStateToProps = ({ user, posts }) => {
+    return {
         email: user.email,
         name: user.name,
+        loading: posts.isUploading
     }
 }
 
-const mapDispatchToProps = dispatch =>{
+const mapDispatchToProps = dispatch => {
     return {
         onAddPost: post => dispatch(addPost(post))
     }
