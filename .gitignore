@@ -58,3 +58,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Google Key
+\src\store\actions\KEY_API.js

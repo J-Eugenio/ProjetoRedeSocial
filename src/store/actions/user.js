@@ -1,8 +1,7 @@
 import { USER_LOGGED_IN ,USER_LOGGED_OUT } from './actionTypes'
 import axios from 'axios'
-
+import { API_KEY } from './KEY_API'
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
-const API_KEY = 'AIzaSyBWuYbUSbSgtY5Ax6gbvFmODezytdqMg1I'
 
 export const login = user => {
     return {
