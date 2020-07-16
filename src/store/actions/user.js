@@ -47,8 +47,8 @@ export const createUser = user => {
                                 text: 'Erro ao bucar ID do usuário'
                             }))
                         })
-                        .then(res => {
-                            console.log('Usuário criado com sucesso')
+                        .then(() =>{
+                            dispatch(login(user))
                         })
                 }
             })
@@ -91,7 +91,7 @@ export const login = user => {
                             }))
                         })
                         .then(res =>{
-                            user.password = null
+                            delete user.password
                             user.name = res.data.name
                             dispatch(userLogged(user))
                             dispatch(userLoaded())
