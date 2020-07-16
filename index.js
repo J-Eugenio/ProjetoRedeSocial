@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import {AppRegistry} from 'react-native'
-import Navigator from './src/Navigator'
+import App from './src/App'
 import {name as appName} from './app.json'
 import {YellowBox} from 'react-native';
 import storeConfig from './src/store/storeConfig'
@@ -15,7 +15,7 @@ console.disableYellowBox = true;
 const store = storeConfig()
 const Redux = () => (
     <Provider store={store}>
-        <Navigator />
+        <App />
     </Provider>
 )
 

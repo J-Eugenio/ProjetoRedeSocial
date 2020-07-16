@@ -4,6 +4,7 @@ import {
     CREATING_POST, 
     POST_CREATED 
 } from './actionTypes'
+import { setMessage } from './message'
 import axios from 'axios'
 
 export const addPost = post => {
@@ -17,12 +18,22 @@ export const addPost = post => {
                 image: post.image.base64
             }
         })
-            .catch(err => console.log(err.error))
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: `Erro ao Enviar Imagem: ${err}`
+                }))
+            })
             .then(resp => {
 
                 post.image = resp.data.imageUrl//copia a url da imagem para o state local image
                 axios.post('/posts.json', { ...post })//persiste os dados no banco.
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title: 'Erro',
+                            text:  `Erro na postagem: ${err}`
+                        }))
+                    })
                     .then(res => {
                         dispatch(getPosts())
                         dispatch(postCreated())
@@ -40,12 +51,22 @@ export const addPost = post => {
 export const addComment = payload => {
     return dispatch =>{
         axios.get(`/posts/${payload.postId}.json`)
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: `Erro ao atualizar comentarios: ${err}`
+                }))
+            })
             .then(res => {
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
                 axios.patch(`/posts/${payload.postId}.json`, { comments })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title:'Erro',
+                            text: `Erro ao adicionar comentário: ${err}`
+                        }))
+                    })
                     .then(res =>{
                         dispatch(getPosts())
                     })
@@ -68,7 +89,12 @@ export const setPosts = posts =>{
 export const getPosts = () => {
     return dispatch =>{
         axios.get('/posts.json')
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: `Erro ao bucar posts ${err}`
+                }))
+            })
             .then(res =>{
                 const rawPosts = res.data
                 const posts = []

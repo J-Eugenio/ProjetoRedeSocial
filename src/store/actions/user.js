@@ -5,6 +5,8 @@ import {
     USER_LOADED
 } from './actionTypes'
 import axios from 'axios'
+import { setMessage } from '../actions/message'
+
 import { API_KEY } from './KEY_API'
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 
@@ -28,13 +30,23 @@ export const createUser = user => {
             password: user.password,
             returnSecureToken: true
         })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title:'Erro',
+                    text: 'Erro ao cadastrar usuário'
+                }))
+            })
             .then(res => {
                 if (res.data.localId) {
                     axios.put(`/users/${res.data.localId}.json`, {
                         name: user.name
                     })
-                        .catch(err => console.log(err))
+                        .catch(err => {
+                            dispatch(setMessage({
+                                title:'Erro',
+                                text: 'Erro ao bucar ID do usuário'
+                            }))
+                        })
                         .then(res => {
                             console.log('Usuário criado com sucesso')
                         })
@@ -63,11 +75,21 @@ export const login = user => {
             password: user.password,
             returnSecureToken: true
         })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({
+                    title:'Erro',
+                    text: 'Login ou senha incorreto'
+                }))
+            })
             .then(res =>{
                 if(res.data.localId){
                     axios.get(`/users/${res.data.localId}.json`)
-                        .catch(err => console.log(err))
+                        .catch(err => {
+                            dispatch(setMessage({
+                                title:'Erro',
+                                text: 'Erro ao bucar ID do usuário'
+                            }))
+                        })
                         .then(res =>{
                             user.password = null
                             user.name = res.data.name
