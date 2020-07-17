@@ -7,6 +7,7 @@ import {
 import axios from 'axios'
 import { setMessage } from '../actions/message'
 
+//Adicione e export a key da api do firebase
 import { API_KEY } from './KEY_API'
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 
@@ -83,6 +84,7 @@ export const login = user => {
             })
             .then(res =>{
                 if(res.data.localId){
+                    user.token = res.data.idToken
                     axios.get(`/users/${res.data.localId}.json`)
                         .catch(err => {
                             dispatch(setMessage({

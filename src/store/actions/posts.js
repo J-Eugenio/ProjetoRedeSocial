@@ -8,7 +8,7 @@ import { setMessage } from './message'
 import axios from 'axios'
 
 export const addPost = post => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(creatingPost())
         axios({//primeiro verifica se a imagem foi enviada
             url: 'uploadImage',
@@ -27,14 +27,14 @@ export const addPost = post => {
             .then(resp => {
 
                 post.image = resp.data.imageUrl//copia a url da imagem para o state local image
-                axios.post('/posts.json', { ...post })//persiste os dados no banco.
+                axios.post(`/posts.json?auth=${getState().user.token}`, { ...post })//persiste os dados no banco.
                     .catch(err => {
                         dispatch(setMessage({
                             title: 'Erro',
                             text:  `Erro na postagem: ${err}`
                         }))
                     })
-                    .then(res => {
+                    .then(() => {
                         dispatch(getPosts())
                         dispatch(postCreated())
                     })
@@ -49,7 +49,7 @@ export const addPost = post => {
 }
 
 export const addComment = payload => {
-    return dispatch =>{
+    return (dispatch, getState) =>{
         axios.get(`/posts/${payload.postId}.json`)
             .catch(err => {
                 dispatch(setMessage({
@@ -60,7 +60,7 @@ export const addComment = payload => {
             .then(res => {
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
-                axios.patch(`/posts/${payload.postId}.json`, { comments })
+                axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, { comments })
                     .catch(err => {
                         dispatch(setMessage({
                             title:'Erro',
