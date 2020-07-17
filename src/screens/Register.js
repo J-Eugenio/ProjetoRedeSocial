@@ -59,10 +59,14 @@ const styles = StyleSheet.create({
         marginTop: 30,
         padding: 10,
         backgroundColor: '#4286F4',
+        borderRadius: 25,
+        minHeight: 20,
+        minWidth: 200
     },
     buttomText:{
         fontSize:20,
-        color: '#FFF'
+        color: '#FFF',
+        textAlign: 'center'
     },
     input:{
         marginTop: 20,
@@ -71,7 +75,8 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 1,
         borderColor: '#333',
-        paddingLeft: 15
+        paddingLeft: 15,
+        borderRadius: 10
     }
 })
 

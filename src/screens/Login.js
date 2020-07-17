@@ -31,7 +31,7 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                 <TextInput placeholder='email' style={styles.input}
-                    autoFocus={true} keyboardType='email-address'
+                    autoFocus={false} keyboardType='email-address'
                     value={this.state.email}
                     onChangeText={email => this.setState({ email })} />
                 <TextInput placeholder='Senha' style={styles.input}
@@ -57,13 +57,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttom: {
+        minHeight: 20,
+        minWidth: 200,
         marginTop: 30,
         padding: 10,
-        backgroundColor: '#4286F4'
+        backgroundColor: '#4286F4',
+        borderRadius: 25
     },
     buttomText: {
         fontSize: 20,
-        color: '#FFF'
+        color: '#FFF',
+        textAlign: 'center'
     },
     input: {
         marginTop: 20,
@@ -71,7 +75,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEE',
         height: 40,
         borderWidth: 1,
-        borderColor: '#333'
+        borderColor: '#333',
+        borderRadius: 10
     }
 })
 
