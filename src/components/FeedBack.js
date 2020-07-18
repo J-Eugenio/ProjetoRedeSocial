@@ -14,7 +14,6 @@ class FeedBack extends Component {
         disableLike: false
     }
 
-
     increaseLike = () => {
         this.setState({
             likes: this.state.likes + 1,
