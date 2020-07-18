@@ -16,6 +16,7 @@ class AddComment extends Component {
         editMode: false
     }
 
+
     handleAddComment = () => {
         this.props.onAddComment({
             postId: this.props.postId,

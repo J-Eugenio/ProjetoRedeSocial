@@ -9,6 +9,7 @@ class Feed extends Component {
 
     componentDidMount = () => {
         this.props.onGetPosts()
+        console.log(this.props.posts)
     }
 
     render() {

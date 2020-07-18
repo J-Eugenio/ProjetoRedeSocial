@@ -7,6 +7,7 @@ import {
 
 const initialState = {
     posts:[],
+    test:'Ola',
     isUploading: false
 }
 

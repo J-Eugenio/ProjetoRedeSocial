@@ -21,6 +21,8 @@ class AddPhoto extends Component {
     state = {
         image: null,
         comment: '',
+        likes: 0,
+        nComments: 0
     }
 
     componentDidUpdate = prevProps => {
@@ -64,7 +66,9 @@ class AddPhoto extends Component {
             comments: [{
                 nickname: this.props.name,
                 comment: this.state.comment
-            }]
+            }],
+            likes: this.state.likes,
+            nComments: this.state.nComments
         })
     }
 

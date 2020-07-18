@@ -9,6 +9,7 @@ import {
 import Author from './Author'
 import Comments from './Comments'
 import AddComment from './AddComment' 
+import FeedBack from './FeedBack'
 
 class Post extends Component {
     render() {
@@ -16,9 +17,11 @@ class Post extends Component {
             <AddComment postId={this.props.id} /> : null
         return (
             <View style={styles.container}>
-                <Image source={{uri: this.props.image}} style={styles.image} />
                 <Author email={this.props.email} nickname={this.props.nickname} />
+                <Image source={{uri: this.props.image}} style={styles.image} />
+                <FeedBack NumeroDeLikes="10" isLiked/>
                 <Comments comments={this.props.comments} />
+                
                 {addComment}
             </View>
         )

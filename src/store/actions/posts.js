@@ -79,6 +79,37 @@ export const addComment = payload => {
     }*/
 }
 
+export const addLikes = (payload) => {
+    return (dispatch, getState) =>{
+        axios.get(`/posts/${payload.postId}.json`)
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: `Erro ao atualizar Likes: ${err}`
+                }))
+            })
+            .then(res => {
+                const likes = res.data.likes || []
+                likes = likes + 1
+                axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, { likes })
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title:'Erro',
+                            text: `Erro ao adicionar like: ${err}`
+                        }))
+                    })
+                    .then(res =>{
+                        dispatch(getPosts())
+                    })
+            })
+    }
+
+    /*return {
+        type: ADD_COMMENT,
+        payload: payload
+    }*/
+}
+
 export const setPosts = posts =>{
     return{
         type: SET_POSTS,
