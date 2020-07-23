@@ -13,17 +13,19 @@ class FeedBack extends Component {
         this.props.onGetPosts()
     }
     state = {
+        likes: 0,
         isLiked: false,
         disableLike: false
     }
 
     increaseLike = () => {
         this.setState({
+            likes: this.state.likes + 1,
             isLiked: !this.state.isLiked,
             //disableLike: !this.state.disableLike
         })
 
-       //console.log(this.props.posts)
+       
     }
     render() {
         
@@ -35,7 +37,7 @@ class FeedBack extends Component {
                         name="hearto"
                         size={30}
                         color={this.state.isLiked ? '#F00' : null} />
-                    <Text style={styles.text}>{this.props.likes}</Text>
+                    <Text style={styles.text}>{this.props.likes + this.state.likes}</Text>
                 </Btn>
                 <Btn style={styles.button} >
                     <CommentIcon name="comment-o" size={33} />

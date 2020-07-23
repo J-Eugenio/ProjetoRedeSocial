@@ -58,6 +58,7 @@ export const addComment = payload => {
                 }))
             })
             .then(res => {
+                console.log(res.data.likes)
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
                 axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, { comments })
