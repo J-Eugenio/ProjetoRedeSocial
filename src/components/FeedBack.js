@@ -5,10 +5,13 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import CommentIcon from 'react-native-vector-icons/FontAwesome'
 
 import { connect } from 'react-redux'
-
+import { getPosts } from '../store/actions/posts'
 //{ comment, hearto }
 class FeedBack extends Component {
 
+    componentDidMount = () => {
+        this.props.onGetPosts()
+    }
     state = {
         isLiked: false,
         disableLike: false
@@ -16,12 +19,11 @@ class FeedBack extends Component {
 
     increaseLike = () => {
         this.setState({
-            likes: this.state.likes + 1,
             isLiked: !this.state.isLiked,
             //disableLike: !this.state.disableLike
         })
 
-        console.log(this.props)
+       //console.log(this.props.posts)
     }
     render() {
         
@@ -65,11 +67,17 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ posts }) => {
     return {
-        name: user.name
+        posts: posts.posts
     }
 }
 
-export default connect(mapStateToProps, null)(FeedBack)
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetPosts: () => dispatch(getPosts())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedBack)
 //export default FeedBack

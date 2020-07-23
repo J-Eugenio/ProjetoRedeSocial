@@ -14,7 +14,9 @@ class Feed extends Component {
 
     render() {
         return (
+            
             <View style={styles.container}>
+                {console.log(this.props.nickname)}
                 <Header />
                 <FlatList
                     data={this.props.posts}

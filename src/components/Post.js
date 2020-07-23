@@ -19,7 +19,7 @@ class Post extends Component {
             <View style={styles.container}>
                 <Author email={this.props.email} nickname={this.props.nickname} />
                 <Image source={{uri: this.props.image}} style={styles.image} />
-                <FeedBack NumeroDeLikes="10" isLiked/>
+                <FeedBack likes={this.props.likes} nComments={20}/>
                 <Comments comments={this.props.comments} />
                 
                 {addComment}
